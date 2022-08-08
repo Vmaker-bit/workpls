@@ -1,0 +1,2232 @@
+if game.coregui:findfirstchild("somexhubmodile") then
+    game.coregui:findfirstchild("somexhubmodile"):destroy()
+end
+
+local somexhubmodile = instance.new("screengui")
+local modileguisomexhub = instance.new("textbutton")
+local modileguisomexhubhui = instance.new("uicorner")
+local modilemage = instance.new("imagelabel")
+
+somexhubmodile.name = "somexhubmodile"
+        somexhubmodile.parent = game.coregui
+        somexhubmodile.zindexbehavior = enum.zindexbehavior.sibling
+
+        modileguisomexhub.name = "modileguisomexhub"
+        modileguisomexhub.parent = somexhubmodile
+        modileguisomexhub.backgroundcolor3 = color3.fromrgb(30,20,20)
+        modileguisomexhub.bordersizepixel = 0
+        modileguisomexhub.position = udim2.new(0.120833337, 0, 0.0952890813, 0)
+        modileguisomexhub.size = udim2.new(0, 50, 0, 50)
+        modileguisomexhub.font = enum.font.sourcesans
+        modileguisomexhub.text = "x"
+        modileguisomexhub.textcolor3 = color3.fromrgb(255, 255, 255)
+        modileguisomexhub.textsize = 14.000
+        modileguisomexhub.draggable = true
+        modileguisomexhub.mousebutton1click:connect(function()
+        game.coregui:findfirstchild("somexhub").enabled = not game.coregui:findfirstchild("somexhub").enabled
+        end)
+        do
+        if game:getservice("coregui"):findfirstchild("somexhub") then
+        end
+        end
+
+        modileguisomexhubhui.name = "modileguisomexhubhui"
+        modileguisomexhubhui.parent = modileguisomexhub
+
+        modilemage.name = "modilemage"
+        modilemage.parent = modileguisomexhub
+        modilemage.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+        modilemage.backgroundtransparency = 1.000
+        modilemage.bordersizepixel = 0
+        modilemage.position = udim2.new(0, 3, 0, 2)
+        modilemage.size = udim2.new(0, 45, 0, 45)
+        modilemage.image = "rbxassetid://9614132122"
+
+do local gui = game.coregui:findfirstchild("somexhub");if gui then gui:destroy();end;if _g.color == nil then
+       _g.color = color3.fromrgb(255,0,0)
+   end 
+end
+
+local userinputservice = game:getservice("userinputservice")
+local tweenservice = game:getservice("tweenservice")
+
+local function makedraggable(topbarobject, object)
+	local dragging = nil
+	local draginput = nil
+	local dragstart = nil
+	local startposition = nil
+
+	local function update(input)
+		local delta = input.position - dragstart
+		local pos = udim2.new(startposition.x.scale, startposition.x.offset + delta.x, startposition.y.scale, startposition.y.offset + delta.y)
+		local tween = tweenservice:create(object, tweeninfo.new(0.15), {position = pos})
+		tween:play()
+	end
+
+	topbarobject.inputbegan:connect(
+		function(input)
+			if input.userinputtype == enum.userinputtype.mousebutton1 or input.userinputtype == enum.userinputtype.touch then
+				dragging = true
+				dragstart = input.position
+				startposition = object.position
+
+				input.changed:connect(
+					function()
+						if input.userinputstate == enum.userinputstate.end then
+							dragging = false
+						end
+					end
+				)
+			end
+		end
+	)
+
+	topbarobject.inputchanged:connect(
+		function(input)
+			if
+				input.userinputtype == enum.userinputtype.mousemovement or
+				input.userinputtype == enum.userinputtype.touch
+			then
+				draginput = input
+			end
+		end
+	)
+
+	userinputservice.inputchanged:connect(
+		function(input)
+			if input == draginput and dragging then
+				update(input)
+			end
+		end
+	)
+end
+
+local update = {}
+
+function update:window(text,logo,keybind)
+	local uihide = false
+	local abc = false
+	local logo = logo or 0
+	local currentpage = ""
+	local keybind = keybind or enum.keycode.rightcontrol
+	local yoo = string.gsub(tostring(keybind),"enum.keycode.","")
+	
+	local somexhub = instance.new("screengui")
+	somexhub.name = "somexhub"
+	somexhub.parent = game.coregui
+	somexhub.zindexbehavior = enum.zindexbehavior.sibling
+
+	local main = instance.new("frame")
+	main.name = "main"
+	main.parent = somexhub
+	main.clipsdescendants = true
+	main.anchorpoint = vector2.new(0.5,0.5)
+	main.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+	main.position = udim2.new(0.5, 0, 0.5, 0)
+	main.size = udim2.new(0, 0, 0, 0)
+	
+	main:tweensize(udim2.new(0, 656, 0, 350),"out","quad",0.4,true)
+	
+	local top = instance.new("frame")
+	top.name = "top"
+	top.parent = main
+	top.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+	top.size = udim2.new(0, 656, 0, 27)
+	
+	local name = instance.new("textlabel")
+	name.name = "name"
+	name.parent = top
+	name.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	name.backgroundtransparency = 1.000
+	name.position = udim2.new(0.0609756112, -25, 0, 0)
+	name.size = udim2.new(0, 61, 0, 27)
+	name.font = enum.font.gothamsemibold
+	name.text = text
+	name.textcolor3 = color3.fromrgb(225, 225, 225)
+	name.textsize = 17.000
+
+	local hub = instance.new("textlabel")
+	hub.name = "hub"
+	hub.parent = top
+	hub.backgroundcolor3 = color3.fromrgb(255, 0, 0)
+	hub.backgroundtransparency = 1.000
+	hub.position = udim2.new(0, 85, 0, 0)
+	hub.size = udim2.new(0, 81, 0, 27)
+	hub.font = enum.font.gothamsemibold
+	hub.text = " hub | bf mobile or pc"
+	hub.textcolor3 = _g.color
+	hub.textsize = 17.000
+	hub.textxalignment = enum.textxalignment.left
+	
+	local hubb = instance.new("textlabel")
+	hubb.name = "hubb"
+	hubb.parent = top
+	hubb.backgroundcolor3 = color3.fromrgb(255, 0, 0)
+	hubb.backgroundtransparency = 1.000
+	hubb.position = udim2.new(0, 480, 0, 0)
+	hubb.size = udim2.new(0, 81, 0, 27)
+	hubb.font = enum.font.gothamsemibold
+	hubb.text = "version : free"
+	hubb.textcolor3 = _g.color
+	hubb.textsize = 17.000
+	hubb.textxalignment = enum.textxalignment.left
+
+	local tab = instance.new("frame")
+	tab.name = "tab"
+	tab.parent = main
+	tab.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+	tab.backgroundtransparency = 1.000
+	tab.position = udim2.new(0, 5, 0, 30)
+	tab.size = udim2.new(0, 150, 0, 350)
+
+local logohub = instance.new("imagelabel")
+	logohub.name = "logohub"
+	logohub.parent = tab
+	logohub.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	logohub.backgroundtransparency = 1.000
+	logohub.position = udim2.new(0, 0, 0, 1)
+	logohub.size = udim2.new(0, 150, 0, 150)
+	logohub.image = "http://www.roblox.com/asset/?id="..tostring(9614132122)
+
+	local scrolltab = instance.new("scrollingframe")
+	scrolltab.name = "scrolltab"
+	scrolltab.parent = tab
+	scrolltab.active = true
+	scrolltab.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	scrolltab.backgroundtransparency = 1.000
+	scrolltab.size = udim2.new(0, 150, 0, 365)
+	scrolltab.canvassize = udim2.new(0, 0, 0, 0)
+	scrolltab.scrollbarthickness = 0
+
+	local pll = instance.new("uilistlayout")
+	pll.name = "pll"
+	pll.parent = scrolltab
+	pll.sortorder = enum.sortorder.layoutorder
+	pll.padding = udim.new(0, 15)
+
+	local ppd = instance.new("uipadding")
+	ppd.name = "ppd"
+	ppd.parent = scrolltab
+	ppd.paddingleft = udim.new(0, 10)
+	ppd.paddingtop = udim.new(0, 10)
+
+	local page = instance.new("frame")
+	page.name = "page"
+	page.parent = main
+	page.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+	page.position = udim2.new(0.245426834, 0, 0.075000003, 0)
+	page.size = udim2.new(0, 490, 0, 365)
+
+	local mainpage = instance.new("frame")
+	mainpage.name = "mainpage"
+	mainpage.parent = page
+	mainpage.clipsdescendants = true
+	mainpage.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	mainpage.backgroundtransparency = 1.000
+	mainpage.size = udim2.new(0, 490, 0, 365)
+
+	local pagelist = instance.new("folder")
+	pagelist.name = "pagelist"
+	pagelist.parent = mainpage
+
+	local uipagelayout = instance.new("uipagelayout")
+
+	uipagelayout.parent = pagelist
+	uipagelayout.sortorder = enum.sortorder.layoutorder
+	uipagelayout.easingdirection = enum.easingdirection.inout
+	uipagelayout.easingstyle = enum.easingstyle.quad
+	uipagelayout.filldirection = enum.filldirection.vertical
+	uipagelayout.padding = udim.new(0, 15)
+	uipagelayout.tweentime = 0.400
+	uipagelayout.gamepadinputenabled = false
+	uipagelayout.scrollwheelinputenabled = false
+	uipagelayout.touchinputenabled = false
+	
+	makedraggable(top,main)
+
+	userinputservice.inputbegan:connect(function(input)
+		if input.keycode == enum.keycode[yoo] then
+			if uihide == false then
+				uihide = true
+				main:tweensize(udim2.new(0, 0, 0, 0),"in","quad",0.4,true)
+			else
+				uihide = false
+				main:tweensize(udim2.new(0, 656, 0, 350),"out","quad",0.4,true)
+			end
+		end
+	end)
+	
+	local uitab = {}
+	
+	function uitab:tab(text,image)
+	    local image = image
+	    
+		local tabbutton = instance.new("textbutton")
+		tabbutton.parent = scrolltab
+		tabbutton.name = text.."server"
+		tabbutton.text = text
+		tabbutton.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+		tabbutton.backgroundtransparency = 0.150
+		tabbutton.size = udim2.new(0, 130, 0, 23)
+		tabbutton.font = enum.font.gothamsemibold
+		tabbutton.textcolor3 = color3.fromrgb(225, 225, 225)
+		tabbutton.textsize = 15.000
+		tabbutton.texttransparency = 0.500
+
+            local pageimage = instance.new("imagelabel")
+            pageimage.name = "pageimage"
+            pageimage.parent = tabbutton
+            pageimage.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+            pageimage.backgroundtransparency = 1.000
+            pageimage.position = udim2.new(0, 5, 0, 5)
+            pageimage.size = udim2.new(0, 15, 0, 15)
+            pageimage.image = "rbxassetid://"..tostring(image)
+            
+		local mainframepage = instance.new("scrollingframe")
+		mainframepage.name = text.."_page"
+		mainframepage.parent = pagelist
+		mainframepage.active = true
+		mainframepage.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+		mainframepage.backgroundtransparency = 1.000
+		mainframepage.bordersizepixel = 0
+		mainframepage.size = udim2.new(0, 490, 0, 365)
+		mainframepage.canvassize = udim2.new(0, 0, 0, 0)
+		mainframepage.scrollbarthickness = 0
+		
+		local uipadding = instance.new("uipadding")
+		local uilistlayout = instance.new("uilistlayout")
+		
+		uipadding.parent = mainframepage
+		uipadding.paddingleft = udim.new(0, 10)
+		uipadding.paddingtop = udim.new(0, 10)
+
+		uilistlayout.padding = udim.new(0,15)
+		uilistlayout.parent = mainframepage
+		uilistlayout.sortorder = enum.sortorder.layoutorder
+		
+		tabbutton.mousebutton1click:connect(function()
+			for i,v in next, scrolltab:getchildren() do
+				if v:isa("textbutton") then
+					tweenservice:create(
+						v,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0.5}
+					):play()
+				end
+				tweenservice:create(
+					tabbutton,
+					tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+					{texttransparency = 0}
+				):play()
+			end
+			for i,v in next, pagelist:getchildren() do
+				currentpage = string.gsub(tabbutton.name,"server","").."_page"
+				if v.name == currentpage then
+					uipagelayout:jumpto(v)
+				end
+			end
+		end)
+
+		if abc == false then
+			for i,v in next, scrolltab:getchildren() do
+				if v:isa("textbutton") then
+					tweenservice:create(
+						v,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0.5}
+					):play()
+				end
+				tweenservice:create(
+					tabbutton,
+					tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+					{texttransparency = 0}
+				):play()
+			end
+			uipagelayout:jumptoindex(1)
+			abc = true
+		end
+		
+		game:getservice("runservice").stepped:connect(function()
+			pcall(function()
+				mainframepage.canvassize = udim2.new(0,0,0,uilistlayout.absolutecontentsize.y + 20)
+				scrolltab.canvassize = udim2.new(0,0,0,pll.absolutecontentsize.y + 20)
+			end)
+		end)
+		
+		local main = {}
+		function main:button(text,callback)
+			local button = instance.new("frame")
+			local uicorner = instance.new("uicorner")
+			local textbtn = instance.new("textbutton")
+			local uicorner_2 = instance.new("uicorner")
+			local black = instance.new("frame")
+			local imgtog = instance.new("imagelabel")
+			local uicorner_3 = instance.new("uicorner")
+			
+			button.name = "button"
+			button.parent = mainframepage
+			button.backgroundcolor3 = _g.color
+			button.size = udim2.new(0, 470, 0, 31)
+			
+			uicorner.cornerradius = udim.new(0, 5)
+			uicorner.parent = button
+			
+			textbtn.name = "textbtn"
+			textbtn.parent = button
+			textbtn.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+			textbtn.position = udim2.new(0, 1, 0, 1)
+			textbtn.size = udim2.new(0, 468, 0, 29)
+			textbtn.autobuttoncolor = false
+			textbtn.font = enum.font.gothamsemibold
+			textbtn.text = text
+			textbtn.textcolor3 = color3.fromrgb(225, 225, 225)
+			textbtn.textsize = 15.000
+			
+			uicorner_2.cornerradius = udim.new(0, 5)
+			uicorner_2.parent = textbtn
+			
+			black.name = "black"
+			black.parent = button
+			black.backgroundcolor3 = color3.fromrgb(0, 0, 0)
+			black.backgroundtransparency = 1.000
+			black.bordersizepixel = 0
+			black.position = udim2.new(0, 1, 0, 1)
+			black.size = udim2.new(0, 468, 0, 29)
+	        
+			uicorner_3.cornerradius = udim.new(0, 5)
+			uicorner_3.parent = black
+
+			textbtn.mouseenter:connect(function()
+				tweenservice:create(
+					black,
+					tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+					{backgroundtransparency = 0.7}
+				):play()
+			end)
+			textbtn.mouseleave:connect(function()
+				tweenservice:create(
+					black,
+					tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+					{backgroundtransparency = 1}
+				):play()
+			end)
+			textbtn.mousebutton1click:connect(function()
+				textbtn.textsize = 0
+				tweenservice:create(
+					textbtn,
+					tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+					{textsize = 15}
+				):play()
+				callback()
+			end)
+		end
+		function main:toggle(text,config,callback)
+			config = config or false
+			local toggled = config
+			local toggle = instance.new("frame")
+			local uicorner = instance.new("uicorner")
+			local button = instance.new("textbutton")
+			local uicorner_2 = instance.new("uicorner")
+			local label = instance.new("textlabel")
+			local toggleimage = instance.new("frame")
+			local uicorner_3 = instance.new("uicorner")
+			local circle = instance.new("frame")
+			local imgtog = instance.new("imagelabel")
+			local uicorner_4 = instance.new("uicorner")
+
+			toggle.name = "toggle"
+			toggle.parent = mainframepage
+			toggle.backgroundcolor3 = _g.color
+			toggle.size = udim2.new(0, 470, 0, 31)
+
+			uicorner.cornerradius = udim.new(0, 5)
+			uicorner.parent = toggle
+
+			button.name = "button"
+			button.parent = toggle
+			button.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+			button.position = udim2.new(0, 1, 0, 1)
+			button.size = udim2.new(0, 468, 0, 29)
+			button.autobuttoncolor = false
+			button.font = enum.font.sourcesans
+			button.text = ""
+			button.textcolor3 = color3.fromrgb(0, 0, 0)
+			button.textsize = 11.000
+
+			uicorner_2.cornerradius = udim.new(0, 5)
+			uicorner_2.parent = button
+
+			label.name = "label"
+			label.parent = toggle
+			label.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			label.backgroundtransparency = 1.000
+			label.position = udim2.new(0, 1, 0, 1)
+			label.size = udim2.new(0, 468, 0, 29)
+			label.font = enum.font.gothamsemibold
+			label.text = text
+			label.textcolor3 = color3.fromrgb(225, 225, 225)
+			label.textsize = 15.000
+
+			toggleimage.name = "toggleimage"
+			toggleimage.parent = toggle
+			toggleimage.backgroundcolor3 = color3.fromrgb(225, 225, 225)
+			toggleimage.position = udim2.new(0, 415, 0, 5)
+			toggleimage.size = udim2.new(0, 45, 0, 20)
+
+			uicorner_3.cornerradius = udim.new(0, 10)
+			uicorner_3.parent = toggleimage
+
+local tggc = instance.new("textlabel")
+	tggc.name = "tggc"
+	tggc.parent = toggle
+	tggc.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	tggc.backgroundtransparency = 1.000
+	tggc.position = udim2.new(0, 40, 0, 3)
+	tggc.size = udim2.new(0, 81, 0, 27)
+	tggc.font = enum.font.gothamsemibold
+    tggc.text = "|"
+	tggc.textcolor3 = _g.color
+	tggc.textsize = 26.000
+	tggc.textxalignment = enum.textxalignment.left
+
+local logotoggle = instance.new("imagelabel")
+	logotoggle.name = "logotoggle"
+	logotoggle.parent = toggle
+	logotoggle.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+	logotoggle.backgroundtransparency = 1.000
+	logotoggle.position = udim2.new(0, 7, 0, 2)
+	logotoggle.size = udim2.new(0, 26, 0, 26)
+	logotoggle.image = "http://www.roblox.com/asset/?id="..tostring(10518370248)
+
+			circle.name = "circle"
+			circle.parent = toggleimage
+			circle.backgroundcolor3 = color3.fromrgb(227, 60, 60)
+			circle.position = udim2.new(0, 2, 0, 2)
+			circle.size = udim2.new(0, 16, 0, 16)
+
+			uicorner_4.cornerradius = udim.new(0, 10)
+			uicorner_4.parent = circle
+
+			button.mousebutton1click:connect(function()
+				if toggled == false then
+					toggled = true
+					circle:tweenposition(udim2.new(0,27,0,2),"out","sine",0.2,true)
+					tweenservice:create(
+						circle,
+						tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+						{backgroundcolor3 = _g.color}
+					):play()
+				else
+					toggled = false
+					circle:tweenposition(udim2.new(0,2,0,2),"out","sine",0.2,true)
+					tweenservice:create(
+						circle,
+						tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+						{backgroundcolor3 = color3.fromrgb(227, 60, 110)}
+					):play()
+				end
+				pcall(callback,toggled)
+			end)
+
+			if config == true then
+				toggled = true
+				circle:tweenposition(udim2.new(0,27,0,2),"out","sine",0.4,true)
+				tweenservice:create(
+					circle,
+					tweeninfo.new(0.4,enum.easingstyle.quad,enum.easingdirection.out),
+					{backgroundcolor3 = _g.color}
+				):play()
+				pcall(callback,toggled)
+			end
+		end
+		function main:dropdown(text,option,callback)
+			local isdropping = false
+			local dropdown = instance.new("frame")
+			local uicorner = instance.new("uicorner")
+			local droptitle = instance.new("textlabel")
+			local dropscroll = instance.new("scrollingframe")
+			local uilistlayout = instance.new("uilistlayout")
+			local uipadding = instance.new("uipadding")
+			local dropbutton = instance.new("textbutton")
+			local dropimage = instance.new("imagelabel")
+			
+			dropdown.name = "dropdown"
+			dropdown.parent = mainframepage
+			dropdown.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+			dropdown.clipsdescendants = true
+			dropdown.size = udim2.new(0, 470, 0, 31)
+			
+			uicorner.cornerradius = udim.new(0, 5)
+			uicorner.parent = dropdown
+			
+			droptitle.name = "droptitle"
+			droptitle.parent = dropdown
+			droptitle.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			droptitle.backgroundtransparency = 1.000
+			droptitle.size = udim2.new(0, 470, 0, 31)
+			droptitle.font = enum.font.gothamsemibold
+			droptitle.text = text.. " : "
+			droptitle.textcolor3 = color3.fromrgb(225, 225, 225)
+			droptitle.textsize = 15.000
+			
+			dropscroll.name = "dropscroll"
+			dropscroll.parent = droptitle
+			dropscroll.active = true
+			dropscroll.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			dropscroll.backgroundtransparency = 1.000
+			dropscroll.bordersizepixel = 0
+			dropscroll.position = udim2.new(0, 0, 0, 31)
+			dropscroll.size = udim2.new(0, 470, 0, 100)
+			dropscroll.canvassize = udim2.new(0, 0, 0, 0)
+			dropscroll.scrollbarthickness = 3
+			
+			uilistlayout.parent = dropscroll
+			uilistlayout.sortorder = enum.sortorder.layoutorder
+			uilistlayout.padding = udim.new(0, 5)
+			
+			uipadding.parent = dropscroll
+			uipadding.paddingleft = udim.new(0, 5)
+			uipadding.paddingtop = udim.new(0, 5)
+			
+			dropimage.name = "dropimage"
+			dropimage.parent = dropdown
+			dropimage.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			dropimage.backgroundtransparency = 1.000
+			dropimage.position = udim2.new(0, 435, 0, 6)
+			dropimage.rotation = 180.000
+			dropimage.size = udim2.new(0, 20, 0, 20)
+			dropimage.image = "rbxassetid://10162644180"
+			
+			dropbutton.name = "dropbutton"
+			dropbutton.parent = dropdown
+			dropbutton.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			dropbutton.backgroundtransparency = 1.000
+			dropbutton.size = udim2.new(0, 470, 0, 31)
+			dropbutton.font = enum.font.sourcesans
+			dropbutton.text = ""
+			dropbutton.textcolor3 = color3.fromrgb(0, 0, 0)
+			dropbutton.textsize = 14.000
+
+			for i,v in next,option do
+				local item = instance.new("textbutton")
+
+				item.name = "item"
+				item.parent = dropscroll
+				item.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+				item.backgroundtransparency = 1.000
+				item.size = udim2.new(0, 460, 0, 26)
+				item.font = enum.font.gothamsemibold
+				item.text = tostring(v)
+				item.textcolor3 = color3.fromrgb(225, 225, 225)
+				item.textsize = 13.000
+				item.texttransparency = 0.500
+
+				item.mouseenter:connect(function()
+					tweenservice:create(
+						item,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0}
+					):play()
+				end)
+
+				item.mouseleave:connect(function()
+					tweenservice:create(
+						item,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0.5}
+					):play()
+				end)
+
+				item.mousebutton1click:connect(function()
+					isdropping = false
+					dropdown:tweensize(udim2.new(0,470,0,31),"out","quad",0.3,true)
+					tweenservice:create(
+						dropimage,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{rotation = 180}
+					):play()
+					callback(item.text)
+					droptitle.text = text.." : "..item.text
+				end)
+			end
+
+			dropscroll.canvassize = udim2.new(0,0,0,uilistlayout.absolutecontentsize.y + 10)
+
+			dropbutton.mousebutton1click:connect(function()
+				if isdropping == false then
+					isdropping = true
+					dropdown:tweensize(udim2.new(0,470,0,131),"out","quad",0.3,true)
+					tweenservice:create(
+						dropimage,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{rotation = 0}
+					):play()
+				else
+					isdropping = false
+					dropdown:tweensize(udim2.new(0,470,0,31),"out","quad",0.3,true)
+					tweenservice:create(
+						dropimage,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{rotation = 180}
+					):play()
+				end
+			end)
+
+			local dropfunc = {}
+			function dropfunc:add(t)
+				local item = instance.new("textbutton")
+				item.name = "item"
+				item.parent = dropscroll
+				item.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+				item.backgroundtransparency = 1.000
+				item.size = udim2.new(0, 470, 0, 26)
+				item.font = enum.font.gothamsemibold
+				item.text = tostring(t)
+				item.textcolor3 = color3.fromrgb(225, 225, 225)
+				item.textsize = 13.000
+				item.texttransparency = 0.500
+
+				item.mouseenter:connect(function()
+					tweenservice:create(
+						item,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0}
+					):play()
+				end)
+
+				item.mouseleave:connect(function()
+					tweenservice:create(
+						item,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{texttransparency = 0.5}
+					):play()
+				end)
+
+				item.mousebutton1click:connect(function()
+					isdropping = false
+					dropdown:tweensize(udim2.new(0,470,0,31),"out","quad",0.3,true)
+					tweenservice:create(
+						dropimage,
+						tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+						{rotation = 180}
+					):play()
+					callback(item.text)
+					droptitle.text = text.." : "..item.text
+				end)
+			end
+			function dropfunc:clear()
+				droptitle.text = tostring(text).." : "
+				isdropping = false
+				dropdown:tweensize(udim2.new(0,470,0,31),"out","quad",0.3,true)
+				tweenservice:create(
+					dropimage,
+					tweeninfo.new(0.3,enum.easingstyle.quad,enum.easingdirection.out),
+					{rotation = 180}
+				):play()
+				for i,v in next, dropscroll:getchildren() do
+					if v:isa("textbutton") then
+						v:destroy()
+					end
+				end
+			end
+			return dropfunc
+		end
+
+		function main:slider(text,min,max,set,callback)
+			local slider = instance.new("frame")
+			local slidercorner = instance.new("uicorner")
+			local sliderr = instance.new("frame")
+			local sliderrcorner = instance.new("uicorner")
+			local sliderlabel = instance.new("textlabel")
+			local haha = instance.new("frame")
+			local ahehe = instance.new("textbutton")
+			local bar = instance.new("frame")
+			local bar1 = instance.new("frame")
+			local bar1corner = instance.new("uicorner")
+			local barcorner = instance.new("uicorner")
+			local circlebar = instance.new("frame")
+			local uicorner = instance.new("uicorner")
+			local slidervalue = instance.new("frame")
+			local valuecorner = instance.new("uicorner")
+			local textbox = instance.new("textbox")
+			local uicorner_2 = instance.new("uicorner")
+
+			slider.name = "slider"
+			slider.parent = mainframepage
+			slider.backgroundcolor3 = _g.color
+			slider.backgroundtransparency = 0
+			slider.size = udim2.new(0, 470, 0, 51)
+
+			slidercorner.cornerradius = udim.new(0, 5)
+			slidercorner.name = "slidercorner"
+			slidercorner.parent = slider
+
+			sliderr.name = "sliderr"
+			sliderr.parent = slider
+			sliderr.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+			sliderr.position = udim2.new(0, 1, 0, 1)
+			sliderr.size = udim2.new(0, 468, 0, 49)
+
+			sliderrcorner.cornerradius = udim.new(0, 5)
+			sliderrcorner.name = "sliderrcorner"
+			sliderrcorner.parent = sliderr
+
+			sliderlabel.name = "sliderlabel"
+			sliderlabel.parent = sliderr
+			sliderlabel.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			sliderlabel.backgroundtransparency = 1.000
+			sliderlabel.position = udim2.new(0, 15, 0, 0)
+			sliderlabel.size = udim2.new(0, 180, 0, 26)
+			sliderlabel.font = enum.font.gothamsemibold
+			sliderlabel.text = text
+			sliderlabel.textcolor3 = color3.fromrgb(225, 225, 225)
+			sliderlabel.textsize = 16.000
+			sliderlabel.texttransparency = 0
+			sliderlabel.textxalignment = enum.textxalignment.left
+
+			haha.name = "haha"
+			haha.parent = sliderr
+			haha.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			haha.backgroundtransparency = 1.000
+			haha.size = udim2.new(0, 468, 0, 29)
+
+			ahehe.name = "ahehe"
+			ahehe.parent = sliderr
+			ahehe.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			ahehe.backgroundtransparency = 1.000
+			ahehe.position = udim2.new(0, 10, 0, 35)
+			ahehe.size = udim2.new(0, 448, 0, 5)
+			ahehe.font = enum.font.sourcesans
+			ahehe.text = ""
+			ahehe.textcolor3 = color3.fromrgb(0, 0, 0)
+			ahehe.textsize = 14.000
+
+			bar.name = "bar"
+			bar.parent = ahehe
+			bar.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+			bar.size = udim2.new(0, 448, 0, 5)
+
+			bar1.name = "bar1"
+			bar1.parent = bar
+			bar1.backgroundcolor3 = _g.color
+			bar1.backgroundtransparency = 0
+			bar1.size = udim2.new(set/max, 0, 0, 5)
+
+			bar1corner.cornerradius = udim.new(0, 5)
+			bar1corner.name = "bar1corner"
+			bar1corner.parent = bar1
+
+			barcorner.cornerradius = udim.new(0, 5)
+			barcorner.name = "barcorner"
+			barcorner.parent = bar
+
+			circlebar.name = "circlebar"
+			circlebar.parent = bar1
+			circlebar.backgroundcolor3 = color3.fromrgb(225, 225, 225)
+			circlebar.position = udim2.new(1, -2, 0, -3)
+			circlebar.size = udim2.new(0, 10, 0, 10)
+
+			uicorner.cornerradius = udim.new(0, 100)
+			uicorner.parent = circlebar
+
+			slidervalue.name = "slidervalue"
+			slidervalue.parent = sliderr
+			slidervalue.backgroundcolor3 = _g.color
+			slidervalue.backgroundtransparency = 0
+			slidervalue.position = udim2.new(0, 395, 0, 5)
+			slidervalue.size = udim2.new(0, 65, 0, 18)
+
+			valuecorner.cornerradius = udim.new(0, 5)
+			valuecorner.name = "valuecorner"
+			valuecorner.parent = slidervalue
+
+			textbox.parent = slidervalue
+			textbox.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+			textbox.position = udim2.new(0, 1, 0, 1)
+			textbox.size = udim2.new(0, 63, 0, 16)
+			textbox.font = enum.font.gothamsemibold
+			textbox.textcolor3 = color3.fromrgb(225, 225, 225)
+			textbox.textsize = 9.000
+			textbox.text = set
+			textbox.texttransparency = 0
+
+			uicorner_2.cornerradius = udim.new(0, 5)
+			uicorner_2.parent = textbox
+
+			local mouse = game.players.localplayer:getmouse()
+			local uis = game:getservice("userinputservice")
+
+			if value == nil then
+				value = set
+				pcall(function()
+					callback(value)
+				end)
+			end
+			
+			ahehe.mousebutton1down:connect(function()
+				value = math.floor((((tonumber(max) - tonumber(min)) / 448) * bar1.absolutesize.x) + tonumber(min)) or 0
+				pcall(function()
+					callback(value)
+				end)
+				bar1.size = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x, 0, 448), 0, 5)
+				circlebar.position = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x - 2, 0, 438), 0, -3)
+				moveconnection = mouse.move:connect(function()
+					textbox.text = value
+					value = math.floor((((tonumber(max) - tonumber(min)) / 448) * bar1.absolutesize.x) + tonumber(min))
+					pcall(function()
+						callback(value)
+					end)
+					bar1.size = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x, 0, 448), 0, 5)
+					circlebar.position = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x - 2, 0, 438), 0, -3)
+				end)
+				releaseconnection = uis.inputended:connect(function(mouse)
+					if mouse.userinputtype == enum.userinputtype.mousebutton1 then
+						value = math.floor((((tonumber(max) - tonumber(min)) / 448) * bar1.absolutesize.x) + tonumber(min))
+						pcall(function()
+							callback(value)
+						end)
+						bar1.size = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x, 0, 448), 0, 5)
+						circlebar.position = udim2.new(0, math.clamp(mouse.x - bar1.absoluteposition.x - 2, 0, 438), 0, -3)
+						moveconnection:disconnect()
+						releaseconnection:disconnect()
+					end
+				end)
+			end)
+			releaseconnection = uis.inputended:connect(function(mouse)
+				if mouse.userinputtype == enum.userinputtype.mousebutton1 then
+					value = math.floor((((tonumber(max) - tonumber(min)) / 448) * bar1.absolutesize.x) + tonumber(min))
+					textbox.text = value
+				end
+			end)
+
+			textbox.focuslost:connect(function()
+				if tonumber(textbox.text) > max then
+					textbox.text  = max
+				end
+				bar1.size = udim2.new((textbox.text or 0) / max, 0, 0, 5)
+				circlebar.position = udim2.new(1, -2, 0, -3)
+				textbox.text = tostring(textbox.text and math.floor( (textbox.text / max) * (max - min) + min) )
+				pcall(callback, textbox.text)
+			end)
+		end
+
+		function main:textbox(text,disappear,callback)
+			local textbox = instance.new("frame")
+			local textboxcorner = instance.new("uicorner")
+			local textboxx = instance.new("frame")
+			local textboxxcorner = instance.new("uicorner")
+			local textboxlabel = instance.new("textlabel")
+			local txtbtn = instance.new("textbutton")
+			local realtextbox = instance.new("textbox")
+			local uicorner = instance.new("uicorner")
+
+			textbox.name = "textbox"
+			textbox.parent = mainframepage
+			textbox.backgroundcolor3 = _g.color
+			textbox.backgroundtransparency = 0
+			textbox.size = udim2.new(0, 470, 0, 31)
+
+			textboxcorner.cornerradius = udim.new(0, 5)
+			textboxcorner.name = "textboxcorner"
+			textboxcorner.parent = textbox
+
+			textboxx.name = "textboxx"
+			textboxx.parent = textbox
+			textboxx.backgroundcolor3 = color3.fromrgb(45, 45, 45)
+			textboxx.position = udim2.new(0, 1, 0, 1)
+			textboxx.size = udim2.new(0, 468, 0, 29)
+
+			textboxxcorner.cornerradius = udim.new(0, 5)
+			textboxxcorner.name = "textboxxcorner"
+			textboxxcorner.parent = textboxx
+
+			textboxlabel.name = "textboxlabel"
+			textboxlabel.parent = textbox
+			textboxlabel.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			textboxlabel.backgroundtransparency = 1.000
+			textboxlabel.position = udim2.new(0, 15, 0, 0)
+			textboxlabel.text = text
+			textboxlabel.size = udim2.new(0, 145, 0, 31)
+			textboxlabel.font = enum.font.gothamsemibold
+			textboxlabel.textcolor3 = color3.fromrgb(225, 225, 225)
+			textboxlabel.textsize = 16.000
+			textboxlabel.texttransparency = 0
+			textboxlabel.textxalignment = enum.textxalignment.left
+
+			txtbtn.name = "txtbtn"
+			txtbtn.parent = textbox
+			txtbtn.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			txtbtn.backgroundtransparency = 1.000
+			txtbtn.position = udim2.new(0, 1, 0, 1)
+			txtbtn.size = udim2.new(0, 468, 0, 29)
+			txtbtn.font = enum.font.sourcesans
+			txtbtn.text = ""
+			txtbtn.textcolor3 = color3.fromrgb(0, 0, 0)
+			txtbtn.textsize = 14.000
+
+			realtextbox.name = "realtextbox"
+			realtextbox.parent = textbox
+			realtextbox.backgroundcolor3 = color3.fromrgb(35, 35, 35)
+			realtextbox.backgroundtransparency = 0
+			realtextbox.position = udim2.new(0, 360, 0, 4)
+			realtextbox.size = udim2.new(0, 100, 0, 24)
+			realtextbox.font = enum.font.gothamsemibold
+			realtextbox.text = ""
+			realtextbox.textcolor3 = color3.fromrgb(225, 225, 225)
+			realtextbox.textsize = 11.000
+			realtextbox.texttransparency = 0
+
+			realtextbox.focuslost:connect(function()
+				callback(realtextbox.text)
+				if disappear then
+					realtextbox.text = ""
+				end
+			end)
+
+			uicorner.cornerradius = udim.new(0, 5)
+			uicorner.parent = realtextbox
+		end
+		function main:label(text)
+			local label = instance.new("textlabel")
+			local paddinglabel = instance.new("uipadding")
+			local labelfunc = {}
+	
+			label.name = "label"
+			label.parent = mainframepage
+			label.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			label.backgroundtransparency = 1.000
+			label.size = udim2.new(0, 470, 0, 20)
+			label.font = enum.font.gothamsemibold
+			label.textcolor3 = color3.fromrgb(225, 225, 225)
+			label.textsize = 16.000
+			label.text = text
+			label.textxalignment = enum.textxalignment.left
+
+			paddinglabel.paddingleft = udim.new(0,15)
+			paddinglabel.parent = label
+			paddinglabel.name = "paddinglabel"
+	
+			function labelfunc:set(newtext)
+				label.text = newtext
+			end
+			return labelfunc
+		end
+
+		function main:seperator(text)
+			local seperator = instance.new("frame")
+			local sep1 = instance.new("frame")
+			local sep2 = instance.new("textlabel")
+			local sep3 = instance.new("frame")
+			
+			seperator.name = "seperator"
+			seperator.parent = mainframepage
+			seperator.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			seperator.backgroundtransparency = 1.000
+			seperator.size = udim2.new(0, 470, 0, 20)
+			
+			sep1.name = "sep1"
+			sep1.parent = seperator
+			sep1.backgroundcolor3 = _g.color
+			sep1.bordersizepixel = 0
+			sep1.position = udim2.new(0, 0, 0, 10)
+			sep1.size = udim2.new(0, 80, 0, 1)
+			
+			sep2.name = "sep2"
+			sep2.parent = seperator
+			sep2.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			sep2.backgroundtransparency = 1.000
+			sep2.position = udim2.new(0, 185, 0, 0)
+			sep2.size = udim2.new(0, 100, 0, 20)
+			sep2.font = enum.font.gothamsemibold
+			sep2.text = text
+			sep2.textcolor3 = color3.fromrgb(255, 255, 255)
+			sep2.textsize = 14.000
+			
+			sep3.name = "sep3"
+			sep3.parent = seperator
+			sep3.backgroundcolor3 = _g.color
+			sep3.bordersizepixel = 0
+			sep3.position = udim2.new(0, 390, 0, 10)
+			sep3.size = udim2.new(0, 80, 0, 1)
+		end
+
+		function main:line()
+			local linee = instance.new("frame")
+			local line = instance.new("frame")
+			
+			linee.name = "linee"
+			linee.parent = mainframepage
+			linee.backgroundcolor3 = color3.fromrgb(255, 255, 255)
+			linee.backgroundtransparency = 1.000
+			linee.position = udim2.new(0, 0, 0.119999997, 0)
+			linee.size = udim2.new(0, 470, 0, 20)
+			
+			line.name = "line"
+			line.parent = linee
+			line.backgroundcolor3 = _g.color
+			line.bordersizepixel = 0
+			line.position = udim2.new(0, 0, 0, 10)
+			line.size = udim2.new(0, 470, 0, 1)
+		end
+		return main
+	end
+	return uitab
+end
+if game.placeid == 2753915549 then
+        world1 = true
+    elseif game.placeid == 4442272183 then
+        world2 = true
+    elseif game.placeid == 7449423635 then
+        world3 = true
+    end
+    
+    function checkquest() 
+        mylevel = game:getservice("players").localplayer.data.level.value
+        if world1 then
+            if mylevel == 1 or mylevel <= 9 then
+                mon = "bandit [lv. 5]"
+                levelquest = 1
+                namequest = "banditquest1"
+                namemon = "bandit"
+                cframequest = cframe.new(1059.37195, 15.4495068, 1550.4231, 0.939700544, -0, -0.341998369, 0, 1, -0, 0.341998369, 0, 0.939700544)
+            elseif mylevel == 10 or mylevel <= 14 then
+                mon = "monkey [lv. 14]"
+                levelquest = 1
+                namequest = "junglequest"
+                namemon = "monkey"
+                cframequest = cframe.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            elseif mylevel == 15 or mylevel <= 29 then
+                mon = "gorilla [lv. 20]"
+                levelquest = 2
+                namequest = "junglequest"
+                namemon = "gorilla"
+                cframequest = cframe.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            elseif mylevel == 30 or mylevel <= 39 then
+                mon = "pirate [lv. 35]"
+                levelquest = 1
+                namequest = "buggyquest1"
+                namemon = "pirate"
+                cframequest = cframe.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            elseif mylevel == 40 or mylevel <= 59 then
+                mon = "brute [lv. 45]"
+                levelquest = 2
+                namequest = "buggyquest1"
+                namemon = "brute"
+                cframequest = cframe.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            elseif mylevel == 60 or mylevel <= 74 then
+                mon = "desert bandit [lv. 60]"
+                levelquest = 1
+                namequest = "desertquest"
+                namemon = "desert bandit"
+                cframequest = cframe.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
+            elseif mylevel == 75 or mylevel <= 89 then
+                mon = "desert officer [lv. 70]"
+                levelquest = 2
+                namequest = "desertquest"
+                namemon = "desert officer"
+                cframequest = cframe.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
+            elseif mylevel == 90 or mylevel <= 99 then
+                mon = "snow bandit [lv. 90]"
+                levelquest = 1
+                namequest = "snowquest"
+                namemon = "snow bandit"
+                cframequest = cframe.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
+            elseif mylevel == 100 or mylevel <= 119 then
+                mon = "snowman [lv. 100]"
+                levelquest = 2
+                namequest = "snowquest"
+                namemon = "snowman"
+                cframequest = cframe.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
+            elseif mylevel == 120 or mylevel <= 149 then
+                mon = "chief petty officer [lv. 120]"
+                levelquest = 1
+                namequest = "marinequest2"
+                namemon = "chief petty officer"
+                cframequest = cframe.new(-5039.58643, 27.3500385, 4324.68018, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 150 or mylevel <= 174 then
+                mon = "sky bandit [lv. 150]"
+                levelquest = 1
+                namequest = "skyquest"
+                namemon = "sky bandit"
+                cframequest = cframe.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            elseif mylevel == 175 or mylevel <= 189 then
+                mon = "dark master [lv. 175]"
+                levelquest = 2
+                namequest = "skyquest"
+                namemon = "dark master"
+                cframequest = cframe.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            elseif mylevel == 190 or mylevel <= 209 then
+                mon = "prisoner [lv. 190]"
+                levelquest = 1
+                namequest = "prisonerquest"
+                namemon = "prisoner"
+                cframequest = cframe.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+            elseif mylevel == 210 or mylevel <= 249 then
+                mon = "dangerous prisoner [lv. 210]"
+                levelquest = 2
+                namequest = "prisonerquest"
+                namemon = "dangerous prisoner"
+                cframequest = cframe.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+            elseif mylevel == 250 or mylevel <= 274 then
+                mon = "toga warrior [lv. 250]"
+                levelquest = 1
+                namequest = "colosseumquest"
+                namemon = "toga warrior"
+                cframequest = cframe.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
+            elseif mylevel == 275 or mylevel <= 299 then
+                mon = "gladiator [lv. 275]"
+                levelquest = 2
+                namequest = "colosseumquest"
+                namemon = "gladiator"
+                cframequest = cframe.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
+            elseif mylevel == 300 or mylevel <= 324 then
+                mon = "military soldier [lv. 300]"
+                levelquest = 1
+                namequest = "magmaquest"
+                namemon = "military soldier"
+                cframequest = cframe.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
+            elseif mylevel == 325 or mylevel <= 374 then
+                mon = "military spy [lv. 325]"
+                levelquest = 2
+                namequest = "magmaquest"
+                namemon = "military spy"
+                cframequest = cframe.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
+            elseif mylevel == 375 or mylevel <= 399 then
+                mon = "fishman warrior [lv. 375]"
+                levelquest = 1
+                namequest = "fishmanquest"
+                namemon = "fishman warrior"
+                cframequest = cframe.new(61122.65234375, 18.497442245483, 1569.3997802734)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+                end
+            elseif mylevel == 400 or mylevel <= 449 then
+                mon = "fishman commando [lv. 400]"
+                levelquest = 2
+                namequest = "fishmanquest"
+                namemon = "fishman commando"
+                cframequest = cframe.new(61122.65234375, 18.497442245483, 1569.3997802734)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+                end
+            elseif mylevel == 450 or mylevel <= 474 then
+                mon = "god's guard [lv. 450]"
+                levelquest = 1
+                namequest = "skyexp1quest"
+                namemon = "god's guard"
+                cframequest = cframe.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-4607.82275, 872.54248, -1667.55688))
+                end
+            elseif mylevel == 475 or mylevel <= 524 then
+                mon = "shanda [lv. 475]"
+                levelquest = 2
+                namequest = "skyexp1quest"
+                namemon = "shanda"
+                cframequest = cframe.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+                end
+            elseif mylevel == 525 or mylevel <= 549 then
+                mon = "royal squad [lv. 525]"
+                levelquest = 1
+                namequest = "skyexp2quest"
+                namemon = "royal squad"
+                cframequest = cframe.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 550 or mylevel <= 624 then
+                mon = "royal soldier [lv. 550]"
+                levelquest = 2
+                namequest = "skyexp2quest"
+                namemon = "royal soldier"
+                cframequest = cframe.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 625 or mylevel <= 649 then
+                mon = "galley pirate [lv. 625]"
+                levelquest = 1
+                namequest = "fountainquest"
+                namemon = "galley pirate"
+                cframequest = cframe.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+            elseif mylevel >= 650 then
+                mon = "galley captain [lv. 650]"
+                levelquest = 2
+                namequest = "fountainquest"
+                namemon = "galley captain"
+                cframequest = cframe.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+            end
+        elseif world2 then
+            if mylevel == 700 or mylevel <= 724 then
+                mon = "raider [lv. 700]"
+                levelquest = 1
+                namequest = "area1quest"
+                namemon = "raider"
+                cframequest = cframe.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
+            elseif mylevel == 725 or mylevel <= 774 then
+                mon = "mercenary [lv. 725]"
+                levelquest = 2
+                namequest = "area1quest"
+                namemon = "mercenary"
+                cframequest = cframe.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
+            elseif mylevel == 775 or mylevel <= 799 then
+                mon = "swan pirate [lv. 775]"
+                levelquest = 1
+                namequest = "area2quest"
+                namemon = "swan pirate"
+                cframequest = cframe.new(638.43811, 71.769989, 918.282898, 0.139203906, 0, 0.99026376, 0, 1, 0, -0.99026376, 0, 0.139203906)
+            elseif mylevel == 800 or mylevel <= 874 then
+                mon = "factory staff [lv. 800]"
+                namequest = "area2quest"
+                levelquest = 2
+                namemon = "factory staff"
+                cframequest = cframe.new(632.698608, 73.1055908, 918.666321, -0.0319722369, 8.96074881e-10, -0.999488771, 1.36326533e-10, 1, 8.92172336e-10, 0.999488771, -1.07732087e-10, -0.0319722369)
+            elseif mylevel == 875 or mylevel <= 899 then
+                mon = "marine lieutenant [lv. 875]"
+                levelquest = 1
+                namequest = "marinequest3"
+                namemon = "marine lieutenant"
+                cframequest = cframe.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            elseif mylevel == 900 or mylevel <= 949 then
+                mon = "marine captain [lv. 900]"
+                levelquest = 2
+                namequest = "marinequest3"
+                namemon = "marine captain"
+                cframequest = cframe.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            elseif mylevel == 950 or mylevel <= 974 then
+                mon = "zombie [lv. 950]"
+                levelquest = 1
+                namequest = "zombiequest"
+                namemon = "zombie"
+                cframequest = cframe.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
+            elseif mylevel == 975 or mylevel <= 999 then
+                mon = "vampire [lv. 975]"
+                levelquest = 2
+                namequest = "zombiequest"
+                namemon = "vampire"
+                cframequest = cframe.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
+            elseif mylevel == 1000 or mylevel <= 1049 then
+                mon = "snow trooper [lv. 1000]"
+                levelquest = 1
+                namequest = "snowmountainquest"
+                namemon = "snow trooper"
+                cframequest = cframe.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
+            elseif mylevel == 1050 or mylevel <= 1099 then
+                mon = "winter warrior [lv. 1050]"
+                levelquest = 2
+                namequest = "snowmountainquest"
+                namemon = "winter warrior"
+                cframequest = cframe.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
+            elseif mylevel == 1100 or mylevel <= 1124 then
+                mon = "lab subordinate [lv. 1100]"
+                levelquest = 1
+                namequest = "icesidequest"
+                namemon = "lab subordinate"
+                cframequest = cframe.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
+            elseif mylevel == 1125 or mylevel <= 1174 then
+                mon = "horned warrior [lv. 1125]"
+                levelquest = 2
+                namequest = "icesidequest"
+                namemon = "horned warrior"
+                cframequest = cframe.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
+            elseif mylevel == 1175 or mylevel <= 1199 then
+                mon = "magma ninja [lv. 1175]"
+                levelquest = 1
+                namequest = "firesidequest"
+                namemon = "magma ninja"
+                cframequest = cframe.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
+            elseif mylevel == 1200 or mylevel <= 1249 then
+                mon = "lava pirate [lv. 1200]"
+                levelquest = 2
+                namequest = "firesidequest"
+                namemon = "lava pirate"
+                cframequest = cframe.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
+            elseif mylevel == 1250 or mylevel <= 1274 then
+                mon = "ship deckhand [lv. 1250]"
+                levelquest = 1
+                namequest = "shipquest1"
+                namemon = "ship deckhand"
+                cframequest = cframe.new(1037.80127, 125.092171, 32911.6016)         
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                end
+            elseif mylevel == 1275 or mylevel <= 1299 then
+                mon = "ship engineer [lv. 1275]"
+                levelquest = 2
+                namequest = "shipquest1"
+                namemon = "ship engineer"
+                cframequest = cframe.new(1037.80127, 125.092171, 32911.6016)   
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                end             
+            elseif mylevel == 1300 or mylevel <= 1324 then
+                mon = "ship steward [lv. 1300]"
+                levelquest = 1
+                namequest = "shipquest2"
+                namemon = "ship steward"
+                cframequest = cframe.new(968.80957, 125.092171, 33244.125)         
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                end
+            elseif mylevel == 1325 or mylevel <= 1349 then
+                mon = "ship officer [lv. 1325]"
+                levelquest = 2
+                namequest = "shipquest2"
+                namemon = "ship officer"
+                cframequest = cframe.new(968.80957, 125.092171, 33244.125)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                end
+            elseif mylevel == 1350 or mylevel <= 1374 then
+                mon = "arctic warrior [lv. 1350]"
+                levelquest = 1
+                namequest = "frostquest"
+                namemon = "arctic warrior"
+                cframequest = cframe.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
+                if _g.autofarm and (cframequest.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 10000 then
+                    game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-6508.5581054688, 5000.034996032715, -132.83953857422))
+                end
+            elseif mylevel == 1375 or mylevel <= 1424 then
+                mon = "snow lurker [lv. 1375]"
+                levelquest = 2
+                namequest = "frostquest"
+                namemon = "snow lurker"
+                cframequest = cframe.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
+            elseif mylevel == 1425 or mylevel <= 1449 then
+                mon = "sea soldier [lv. 1425]"
+                levelquest = 1
+                namequest = "forgottenquest"
+                namemon = "sea soldier"
+                cframequest = cframe.new(-3054.44458, 235.544281, -10142.8193, 0.990270376, -0, -0.13915664, 0, 1, -0, 0.13915664, 0, 0.990270376)
+            elseif mylevel >= 1450 then
+                mon = "water fighter [lv. 1450]"
+                levelquest = 2
+                namequest = "forgottenquest"
+                namemon = "water fighter"
+                cframequest = cframe.new(-3054.44458, 235.544281, -10142.8193, 0.990270376, -0, -0.13915664, 0, 1, -0, 0.13915664, 0, 0.990270376)
+            end
+        elseif world3 then
+            if mylevel == 1500 or mylevel <= 1524 then
+                mon = "pirate millionaire [lv. 1500]"
+                levelquest = 1
+                namequest = "pirateportquest"
+                namemon = "pirate millionaire"
+                cframequest = cframe.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            elseif mylevel == 1525 or mylevel <= 1574 then
+                mon = "pistol billionaire [lv. 1525]"
+                levelquest = 2
+                namequest = "pirateportquest"
+                namemon = "pistol billionaire"
+                cframequest = cframe.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            elseif mylevel == 1575 or mylevel <= 1599 then
+                mon = "dragon crew warrior [lv. 1575]"
+                levelquest = 1
+                namequest = "amazonquest"
+                namemon = "dragon crew warrior"
+                cframequest = cframe.new(5832.83594, 51.6806107, -1101.51563, 0.898790359, -0, -0.438378751, 0, 1, -0, 0.438378751, 0, 0.898790359)
+            elseif mylevel == 1600 or mylevel <= 1624 then 
+                mon = "dragon crew archer [lv. 1600]"
+                namequest = "amazonquest"
+                levelquest = 2
+                namemon = "dragon crew archer"
+                cframequest = cframe.new(5833.1147460938, 51.60498046875, -1103.0693359375)
+            elseif mylevel == 1625 or mylevel <= 1649 then
+                mon = "female islander [lv. 1625]"
+                namequest = "amazonquest2"
+                levelquest = 1
+                namemon = "female islander"
+                cframequest = cframe.new(5446.8793945313, 601.62945556641, 749.45672607422)
+            elseif mylevel == 1650 or mylevel <= 1699 then 
+                mon = "giant islander [lv. 1650]"
+                namequest = "amazonquest2"
+                levelquest = 2
+                namemon = "giant islander"
+                cframequest = cframe.new(5446.8793945313, 601.62945556641, 749.45672607422)
+            elseif mylevel == 1700 or mylevel <= 1724 then
+                mon = "marine commodore [lv. 1700]"
+                levelquest = 1
+                namequest = "marinetreeisland"
+                namemon = "marine commodore"
+                cframequest = cframe.new(2180.54126, 27.8156815, -6741.5498, -0.965929747, 0, 0.258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
+            elseif mylevel == 1725 or mylevel <= 1774 then
+                mon = "marine rear admiral [lv. 1725]"
+                namemon = "marine rear admiral"
+                namequest = "marinetreeisland"
+                levelquest = 2
+                cframequest = cframe.new(2179.98828125, 28.731239318848, -6740.0551757813)
+            elseif mylevel == 1775 or mylevel <= 1799 then
+                mon = "fishman raider [lv. 1775]"
+                levelquest = 1
+                namequest = "deepforestisland3"
+                namemon = "fishman raider"
+                cframequest = cframe.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
+            elseif mylevel == 1800 or mylevel <= 1824 then
+                mon = "fishman captain [lv. 1800]"
+                levelquest = 2
+                namequest = "deepforestisland3"
+                namemon = "fishman captain"
+                cframequest = cframe.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
+            elseif mylevel == 1825 or mylevel <= 1849 then
+                mon = "forest pirate [lv. 1825]"
+                levelquest = 1
+                namequest = "deepforestisland"
+                namemon = "forest pirate"
+                cframequest = cframe.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)
+            elseif mylevel == 1850 or mylevel <= 1899 then
+                mon = "mythological pirate [lv. 1850]"
+                levelquest = 2
+                namequest = "deepforestisland"
+                namemon = "mythological pirate"
+                cframequest = cframe.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)   
+            elseif mylevel == 1900 or mylevel <= 1924 then
+                mon = "jungle pirate [lv. 1900]"
+                levelquest = 1
+                namequest = "deepforestisland2"
+                namemon = "jungle pirate"
+                cframequest = cframe.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
+            elseif mylevel == 1925 or mylevel <= 1974 then
+                mon = "musketeer pirate [lv. 1925]"
+                levelquest = 2
+                namequest = "deepforestisland2"
+                namemon = "musketeer pirate"
+                cframequest = cframe.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
+            elseif mylevel == 1975 or mylevel <= 1999 then
+                mon = "reborn skeleton [lv. 1975]"
+                levelquest = 1
+                namequest = "hauntedquest1"
+                namemon = "reborn skeleton"
+                cframequest = cframe.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            elseif mylevel == 2000 or mylevel <= 2024 then
+                mon = "living zombie [lv. 2000]"
+                levelquest = 2
+                namequest = "hauntedquest1"
+                namemon = "living zombie"
+                cframequest = cframe.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            elseif mylevel == 2025 or mylevel <= 2049 then
+                mon = "demonic soul [lv. 2025]"
+                levelquest = 1
+                namequest = "hauntedquest2"
+                namemon = "demonic soul"
+                cframequest = cframe.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0) 
+            elseif mylevel == 2050 or mylevel <= 2074 then
+                mon = "posessed mummy [lv. 2050]"
+                levelquest = 2
+                namequest = "hauntedquest2"
+                namemon = "posessed mummy"
+                cframequest = cframe.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 2075 or mylevel <= 2099 then
+                mon = "peanut scout [lv. 2075]"
+                levelquest = 1
+                namequest = "nutsislandquest"
+                namemon = "peanut scout"
+                cframequest = cframe.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 2100 or mylevel <= 2124 then
+                mon = "peanut president [lv. 2100]"
+                levelquest = 2
+                namequest = "nutsislandquest"
+                namemon = "peanut president"
+                cframequest = cframe.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 2125 or mylevel <= 2149 then
+                mon = "ice cream chef [lv. 2125]"
+                levelquest = 1
+                namequest = "icecreamislandquest"
+                namemon = "ice cream chef"
+                cframequest = cframe.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 2150 or mylevel <= 2199 then
+                mon = "ice cream commander [lv. 2150]"
+                levelquest = 2
+                namequest = "icecreamislandquest"
+                namemon = "ice cream commander"
+                cframequest = cframe.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            elseif mylevel == 2200 or mylevel <= 2224 then
+                mon = "cookie crafter [lv. 2200]"
+                levelquest = 1
+                namequest = "cakequest1"
+                namemon = "cookie crafter"
+                cframequest = cframe.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
+            elseif mylevel == 2225 or mylevel <= 2249 then
+                mon = "cake guard [lv. 2225]"
+                levelquest = 2
+                namequest = "cakequest1"
+                namemon = "cake guard"
+                cframequest = cframe.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
+            elseif mylevel == 2250 or mylevel <= 2274 then
+                mon = "baking staff [lv. 2250]"
+                levelquest = 1
+                namequest = "cakequest2"
+                namemon = "baking staff"
+                cframequest = cframe.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
+            elseif mylevel >= 2275 then
+                mon = "head baker [lv. 2275]"
+                levelquest = 2
+                namequest = "cakequest2"
+                namemon = "head baker"
+                cframequest = cframe.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
+            end
+        end
+    end
+
+    function hop()
+        local placeid = game.placeid
+        local allids = {}
+        local foundanything = ""
+        local actualhour = os.date("!*t").hour
+        local deleted = false
+        function tpreturner()
+            local site;
+            if foundanything == "" then
+                site = game.httpservice:jsondecode(game:httpget('https://games.roblox.com/v1/games/' .. placeid .. '/servers/public?sortorder=asc&limit=100'))
+            else
+                site = game.httpservice:jsondecode(game:httpget('https://games.roblox.com/v1/games/' .. placeid .. '/servers/public?sortorder=asc&limit=100&cursor=' .. foundanything))
+            end
+            local id = ""
+            if site.nextpagecursor and site.nextpagecursor ~= "null" and site.nextpagecursor ~= nil then
+                foundanything = site.nextpagecursor
+            end
+            local num = 0;
+            for i,v in pairs(site.data) do
+                local possible = true
+                id = tostring(v.id)
+                if tonumber(v.maxplayers) > tonumber(v.playing) then
+                    for _,existing in pairs(allids) do
+                        if num ~= 0 then
+                            if id == tostring(existing) then
+                                possible = false
+                            end
+                        else
+                            if tonumber(actualhour) ~= tonumber(existing) then
+                                local delfile = pcall(function()
+                                    allids = {}
+                                    table.insert(allids, actualhour)
+                                end)
+                            end
+                        end
+                        num = num + 1
+                    end
+                    if possible == true then
+                        table.insert(allids, id)
+                        wait()
+                        pcall(function()
+                            wait()
+                            game:getservice("teleportservice"):teleporttoplaceinstance(placeid, id, game.players.localplayer)
+                        end)
+                        wait(4)
+                    end
+                end
+            end
+        end
+        function teleport() 
+            while wait() do
+                pcall(function()
+                    tpreturner()
+                    if foundanything ~= "" then
+                        tpreturner()
+                    end
+                end)
+            end
+        end
+        teleport()
+    end                   
+    
+	function isnil(thing)
+		return (thing == nil)
+	end
+	local function round(n)
+		return math.floor(tonumber(n) + 0.5)
+	end
+	number = math.random(1, 1000000)
+	function updateespplayer()
+		for i,v in pairs(game:getservice'players':getchildren()) do
+			pcall(function()
+				if not isnil(v.character) then
+					if espplayer then
+						if not isnil(v.character.head) and not v.character.head:findfirstchild('nameesp'..number) then
+							local bill = instance.new('billboardgui',v.character.head)
+							bill.name = 'nameesp'..number
+							bill.extentsoffset = vector3.new(0, 1, 0)
+							bill.size = udim2.new(1,200,1,30)
+							bill.adornee = v.character.head
+							bill.alwaysontop = true
+							local name = instance.new('textlabel',bill)
+							name.font = "gothambold"
+							name.fontsize = "size14"
+							name.textwrapped = true
+							name.text = (v.name ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.character.head.position).magnitude/3) ..' m')
+							name.size = udim2.new(1,0,1,0)
+							name.textyalignment = 'top'
+							name.backgroundtransparency = 1
+							name.textstroketransparency = 0.5
+							if v.team == game.players.localplayer.team then
+								name.textcolor3 = color3.new(0,255,0)
+							else
+								name.textcolor3 = color3.new(255,0,0)
+							end
+						else
+							v.character.head['nameesp'..number].textlabel.text = (v.name ..' | '.. round((game:getservice('players').localplayer.character.head.position - v.character.head.position).magnitude/3) ..' m\nhealth : ' .. round(v.character.humanoid.health*100/v.character.humanoid.maxhealth) .. '%')
+						end
+					else
+						if v.character.head:findfirstchild('nameesp'..number) then
+							v.character.head:findfirstchild('nameesp'..number):destroy()
+						end
+					end
+				end
+			end)
+		end
+	end
+    
+    function updateislandesp() 
+        for i,v in pairs(game:getservice("workspace")["_worldorigin"].locations:getchildren()) do
+            pcall(function()
+                if islandesp then 
+                    if v.name ~= "sea" then
+                        if not v:findfirstchild('nameesp') then
+                            local bill = instance.new('billboardgui',v)
+                            bill.name = 'nameesp'
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(80, 245, 245)
+                        else
+                            v['nameesp'].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v:findfirstchild('nameesp') then
+                        v:findfirstchild('nameesp'):destroy()
+                    end
+                end
+            end)
+        end
+    end
+    
+    function updatechestesp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if string.find(v.name,"chest") then
+                    if chestesp then
+                        if string.find(v.name,"chest") then
+                            if not v:findfirstchild('nameesp'..number) then
+                                local bill = instance.new('billboardgui',v)
+                                bill.name = 'nameesp'..number
+                                bill.extentsoffset = vector3.new(0, 1, 0)
+                                bill.size = udim2.new(1,200,1,30)
+                                bill.adornee = v
+                                bill.alwaysontop = true
+                                local name = instance.new('textlabel',bill)
+                                name.font = "gothambold"
+                                name.fontsize = "size14"
+                                name.textwrapped = true
+                                name.size = udim2.new(1,0,1,0)
+                                name.textyalignment = 'top'
+                                name.backgroundtransparency = 1
+                                name.textstroketransparency = 0.5
+                                name.textcolor3 = color3.fromrgb(0, 255, 250)
+                            if v.name == "chest1" then
+                                name.text = ("chest 1" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            end
+                            if v.name == "chest2" then
+                                name.text = ("chest 2" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            end
+                        if v.name == "chest3" then
+                            name.text = ("chest 3" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                        else
+                            v['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v:findfirstchild('nameesp'..number) then
+                    v:findfirstchild('nameesp'..number):destroy()
+                    end
+                end
+                end
+            end)
+        end
+    end
+    
+    function updatebfesp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if devilfruitesp then
+                    if string.find(v.name, "fruit") then   
+                        if not v.handle:findfirstchild('nameesp'..number) then
+                            local bill = instance.new('billboardgui',v.handle)
+                            bill.name = 'nameesp'..number
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v.handle
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                            name.text = (v.name ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.handle.position).magnitude/3) ..' m')
+                        else
+                            v.handle['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.handle.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v.handle:findfirstchild('nameesp'..number) then
+                        v.handle:findfirstchild('nameesp'..number):destroy()
+                        end
+                end
+            end)
+        end
+    end
+    
+    function updatefloweresp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if v.name == "flower2" or v.name == "flower1" then
+                    if floweresp then 
+                        if not v:findfirstchild('nameesp'..number) then
+                            local bill = instance.new('billboardgui',v)
+                            bill.name = 'nameesp'..number
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        if v.name == "flower1" then 
+                            name.text = ("blue flower" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        end
+                        if v.name == "flower2" then
+                            name.text = ("red flower" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        end
+                    else
+                        v['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                    end
+                    else
+                        if v:findfirstchild('nameesp'..number) then
+                            v:findfirstchild('nameesp'..number):destroy()
+                        end
+                    end
+                end   
+            end)
+        end
+    end
+    
+    function infab()
+        if infability then
+            if not game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility") then
+                local inf = instance.new("particleemitter")
+                inf.acceleration = vector3.new(0,0,0)
+                inf.archivable = true
+                inf.drag = 20
+                inf.emissiondirection = enum.normalid.top
+                inf.enabled = true
+                inf.lifetime = numberrange.new(0,0)
+                inf.lightinfluence = 0
+                inf.lockedtopart = true
+                inf.name = "agility"
+                inf.rate = 500
+                local numberkeypoints2 = {
+                    numbersequencekeypoint.new(0, 0);
+                    numbersequencekeypoint.new(1, 4); 
+                }
+                inf.size = numbersequence.new(numberkeypoints2)
+                inf.rotspeed = numberrange.new(9999, 99999)
+                inf.rotation = numberrange.new(0, 0)
+                inf.speed = numberrange.new(30, 30)
+                inf.spreadangle = vector2.new(0,0,0,0)
+                inf.texture = ""
+                inf.velocityinheritance = 0
+                inf.zoffset = 2
+                inf.transparency = numbersequence.new(0)
+                inf.color = colorsequence.new(color3.fromrgb(0,0,0),color3.fromrgb(0,0,0))
+                inf.parent = game:getservice("players").localplayer.character.humanoidrootpart
+            end
+        else
+            if game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility") then
+                game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility"):destroy()
+            end
+        end
+    end
+    
+    local localplayer = game:getservice'players'.localplayer
+    local originalstam = localplayer.character.energy.value
+    function infinitestam()
+        localplayer.character.energy.changed:connect(function()
+            if infiniteenergy then
+                localplayer.character.energy.value = originalstam
+            end 
+        end)
+    end
+    
+    spawn(function()
+        pcall(function()
+            while wait(.1) do
+                if infiniteenergy then
+                    wait(0.1)
+                    originalstam = localplayer.character.energy.value
+                    infinitestam()
+                end
+            end
+        end)
+    end)
+    
+    function nododgecool()
+        if nododgecool then
+            for i,v in next, getgc() do
+                if game:getservice("players").localplayer.character.dodge then
+                    if typeof(v) == "function" and getfenv(v).script == game:getservice("players").localplayer.character.dodge then
+                        for i2,v2 in next, getupvalues(v) do
+                            if tostring(v2) == "0.1" then
+                            repeat wait(.1)
+                                setupvalue(v,i2,0)
+                            until not nododgecool
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    function fly()
+        local mouse=game:getservice("players").localplayer:getmouse''
+        localplayer=game:getservice("players").localplayer
+        game:getservice("players").localplayer.character:waitforchild("humanoidrootpart")
+        local torso = game:getservice("players").localplayer.character.humanoidrootpart
+        local speedset=25
+        local keys={a=false,d=false,w=false,s=false}
+        local e1
+        local e2
+        local function start()
+            local pos = instance.new("bodyposition",torso)
+            local gyro = instance.new("bodygyro",torso)
+            pos.name="epixpos"
+            pos.maxforce = vector3.new(math.huge, math.huge, math.huge)
+            pos.position = torso.position
+            gyro.maxtorque = vector3.new(9e9, 9e9, 9e9)
+            gyro.cframe = torso.cframe
+            repeat
+                    wait()
+                    localplayer.character.humanoid.platformstand=true
+                    local new=gyro.cframe - gyro.cframe.p + pos.position
+                    if not keys.w and not keys.s and not keys.a and not keys.d then
+                    speed=1
+                    end
+                    if keys.w then
+                    new = new + workspace.currentcamera.coordinateframe.lookvector * speed
+                    speed=speed+speedset
+                    end
+                    if keys.s then
+                    new = new - workspace.currentcamera.coordinateframe.lookvector * speed
+                    speed=speed+speedset
+                    end
+                    if keys.d then
+                    new = new * cframe.new(speed,0,0)
+                    speed=speed+speedset
+                    end
+                    if keys.a then
+                    new = new * cframe.new(-speed,0,0)
+                    speed=speed+speedset
+                    end
+                    if speed>speedset then
+                    speed=speedset
+                    end
+                    pos.position=new.p
+                    if keys.w then
+                    gyro.cframe = workspace.currentcamera.coordinateframe*cframe.angles(-math.rad(speed*15),0,0)
+                    elseif keys.s then
+                    gyro.cframe = workspace.currentcamera.coordinateframe*cframe.angles(math.rad(speed*15),0,0)
+                    else
+                    gyro.cframe = workspace.currentcamera.coordinateframe
+                    end
+            until not fly
+            if gyro then 
+                    gyro:destroy() 
+            end
+            if pos then 
+                    pos:destroy() 
+            end
+            flying=false
+            localplayer.character.humanoid.platformstand=false
+            speed=0
+        end
+        e1=mouse.keydown:connect(function(key)
+            if not torso or not torso.parent then 
+                    flying=false e1:disconnect() e2:disconnect() return 
+            end
+            if key=="w" then
+                keys.w=true
+            elseif key=="s" then
+                keys.s=true
+            elseif key=="a" then
+                keys.a=true
+            elseif key=="d" then
+                keys.d=true
+            end
+        end)
+        e2=mouse.keyup:connect(function(key)
+            if key=="w" then
+                keys.w=false
+            elseif key=="s" then
+                keys.s=false
+            elseif key=="a" then
+                keys.a=false
+            elseif key=="d" then
+                keys.d=false
+            end
+        end)
+        start()
+    end
+    
+    function click()
+        game:getservice'virtualuser':capturecontroller()
+        game:getservice'virtualuser':button1down(vector2.new(1280, 672))
+    end
+    
+    function autohaki()
+        if not game:getservice("players").localplayer.character:findfirstchild("hasbuso") then
+            game:getservice("replicatedstorage").remotes.commf_:invokeserver("buso")
+        end
+    end
+    
+    function unequipweapon(weapon)
+        if game.players.localplayer.character:findfirstchild(weapon) then
+            _g.notautoequip = true
+            wait(.5)
+            game.players.localplayer.character:findfirstchild(weapon).parent = game.players.localplayer.backpack
+            wait(.1)
+            _g.notautoequip = false
+        end
+    end
+    
+    function equipweapon(toolse)
+        if not _g.notautoequip then
+            if game.players.localplayer.backpack:findfirstchild(toolse) then
+                tool = game.players.localplayer.backpack:findfirstchild(toolse)
+                wait(.1)
+                game.players.localplayer.character.humanoid:equiptool(tool)
+            end
+        end
+    end
+    
+    function topos(pos)
+        distance = (pos.position - game.players.localplayer.character.humanoidrootpart.position).magnitude
+        if game.players.localplayer.character.humanoid.sit == true then game.players.localplayer.character.humanoid.sit = false end
+        pcall(function() tween = game:getservice("tweenservice"):create(game.players.localplayer.character.humanoidrootpart,tweeninfo.new(distance/210, enum.easingstyle.linear),{cframe = pos}) end)
+        tween:play()
+        if distance <= 250 then
+            tween:cancel()
+            game.players.localplayer.character.humanoidrootpart.cframe = pos
+        end
+        if _g.stoptween == true then
+            tween:cancel()
+            _g.clip = false
+        end
+    end
+    
+    function getdistance(target)
+        return math.floor((target.position - game.players.localplayer.character.humanoidrootpart.position).magnitude)
+    end
+    
+    function tp1(pos)
+    distance = (pos.position - game.players.localplayer.character.humanoidrootpart.position).magnitude
+    if distance < 1200 then
+        speed = 1200
+    elseif distance < 1000 then
+        speed = 1200
+    elseif distance < 2600 then
+        speed = 1200
+    elseif distance >= 1000 then
+        speed = 1200
+    end
+    game:getservice("tweenservice"):create(
+        game.players.localplayer.character.humanoidrootpart,
+        tweeninfo.new(distance/speed, enum.easingstyle.linear),
+        {cframe = pos}
+    ):play()
+end
+    
+    function tp(pos)
+        distance = (pos.position - game:getservice("players").localplayer.character.humanoidrootpart.position).magnitude
+        if distance < 1000 then
+            speed = 1200
+        elseif distance >= 1000 then
+            speed = 1200
+        end
+        game:getservice("tweenservice"):create(
+            game:getservice("players").localplayer.character.humanoidrootpart,
+            tweeninfo.new(distance/speed, enum.easingstyle.linear),
+            {cframe = pos}
+        ):play()
+        _g.clip = true
+        wait(distance/speed)
+        _g.clip = false
+    end
+    
+    spawn(function()
+        pcall(function()
+            while wait() do
+                if _g.autoadvancedungeon or _g.autodoughtboss or _g.auto_dungeonmobaura or _g.autofarmchest or _g.autofarmbosshallow or _g.autofarmswanglasses or _g.autolongsword or _g.autoblackspikeycoat or _g.autoelectricclaw or _g.autofarmgunmastery or _g.autoholytorch or _g.autolawraid or _g.autofarmboss or _g.autotwinhooks or _g.autoopenswandoor or _g.autodragon_trident or _g.autosaber or _g.autofarmfruitmastery or _g.autofarmgunmastery or _g.teleportisland or _g.auto_evorace or _g.autofarmallmsbypasstype or _g.autoobservationv2 or _g.automusketeerhat or _g.autoectoplasm or _g.autorengoku or _g.auto_rainbow_haki or _g.autoobservation or _g.autodarkdagger or _g.safe_mode or _g.masteryfruit or _g.autobudysword or _g.autoodersword or _g.autobounty or _g.autoallboss or _g.auto_bounty or _g.autosharkman or _g.auto_mastery_fruit or _g.auto_mastery_gun or _g.auto_dungeon or _g.auto_cavender or _g.auto_pole or _g.auto_kill_ply or _g.auto_factory or _g.autosecondsea or _g.teleportply or _g.autobartilo or _g.auto_darkboss or _g.grabchest or _g.autofarmbounty or _g.holy_torch or _g.autofarm or _g.clip or farmboss or _g.autoelitehunter or _g.autothirdsea or _g.auto_bone or _g.autofarmcandy == true then
+                    if not game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("bodyclip") then
+                        local noclip = instance.new("bodyvelocity")
+                        noclip.name = "bodyclip"
+                        noclip.parent = game:getservice("players").localplayer.character.humanoidrootpart
+                        noclip.maxforce = vector3.new(100000,100000,100000)
+                        noclip.velocity = vector3.new(0,0,0)
+                    end
+                end
+            end
+        end)
+    end)
+    
+    spawn(function()
+        pcall(function()
+            game:getservice("runservice").stepped:connect(function()
+                if _g.autoadvancedungeon or _g.autodoughtboss or _g.auto_dungeonmobaura or _g.autofarmchest or _g.autofarmbosshallow or _g.autofarmswanglasses or _g.autolongsword or _g.autoblackspikeycoat or _g.autoelectricclaw or _g.autofarmgunmastery or _g.autoholytorch or _g.autolawraid or _g.autofarmboss or _g.autotwinhooks or _g.autoopenswandoor or _g.autodragon_trident or _g.autosaber or _g.noclip or _g.autofarmfruitmastery or _g.autofarmgunmastery or _g.teleportisland or _g.auto_evorace or _g.autofarmallmsbypasstype or _g.autoobservationv2 or _g.automusketeerhat or _g.autoectoplasm or _g.autorengoku or _g.auto_rainbow_haki or _g.autoobservation or _g.autodarkdagger or _g.safe_mode or _g.masteryfruit or _g.autobudysword or _g.autoodersword or _g.autobounty or _g.autoallboss or _g.auto_bounty or _g.autosharkman or _g.auto_mastery_fruit or _g.auto_mastery_gun or _g.auto_dungeon or _g.auto_cavender or _g.auto_pole or _g.auto_kill_ply or _g.auto_factory or _g.autosecondsea or _g.teleportply or _g.autobartilo or _g.auto_darkboss or _g.grabchest or _g.autofarmbounty or _g.holy_torch or _g.autofarm or _g.clip or _g.autoelitehunter or _g.autothirdsea or _g.auto_bone or _g.autofarmcandy == true then
+                    for _, v in pairs(game:getservice("players").localplayer.character:getdescendants()) do
+                        if v:isa("basepart") then
+                            v.cancollide = false    
+                        end
+                    end
+                end
+            end)
+        end)
+    end)
+    
+    spawn(function()
+        while wait() do
+            if _g.autodoughtboss or _g.auto_dungeonmobaura or _g.autofarmchest or _g.autofarmbosshallow or _g.autofarmswanglasses or _g.autolongsword or _g.autoblackspikeycoat or _g.autoelectricclaw or _g.autofarmgunmastery or _g.autoholytorch or _g.autolawraid or _g.autofarmboss or _g.autotwinhooks or _g.autoopenswandoor or _g.autodragon_trident or _g.autosaber or _g.noclip or _g.autofarmfruitmastery or _g.autofarmgunmastery or _g.teleportisland or _g.auto_evorace or _g.autofarmallmsbypasstype or _g.autoobservationv2 or _g.automusketeerhat or _g.autoectoplasm or _g.autorengoku or _g.auto_rainbow_haki or _g.autoobservation or _g.autodarkdagger or _g.safe_mode or _g.masteryfruit or _g.autobudysword or _g.autoodersword or _g.autoallboss or _g.auto_bounty or _g.autosharkman or _g.auto_mastery_fruit or _g.auto_mastery_gun or _g.auto_dungeon or _g.auto_cavender or _g.auto_pole or _g.auto_kill_ply or _g.auto_factory or _g.autosecondsea or _g.teleportply or _g.autobartilo or _g.auto_darkboss or _g.autofarm or _g.clip or _g.autoelitehunter or _g.autothirdsea or _g.auto_bone or _g.autofarmcandy == true then
+                pcall(function()
+                    game:getservice("replicatedstorage").remotes.comme:fireserver("ken",true)
+                end)
+            end    
+        end
+    end)
+    
+    function stoptween(target)
+        if not target then
+            _g.stoptween = true
+            wait()
+            topos(game:getservice("players").localplayer.character.humanoidrootpart.cframe)
+            wait()
+            if game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("bodyclip") then
+                game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("bodyclip"):destroy()
+            end
+            _g.stoptween = false
+            _g.clip = false
+        end
+    end
+    
+    spawn(function()
+        pcall(function()
+            while wait() do
+                for i,v in pairs(game:getservice("players").localplayer.backpack:getchildren()) do  
+                    if v:isa("tool") then
+                        if v:findfirstchild("remotefunctionshoot") then 
+                            selectweapongun = v.name
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+    
+    game:getservice("players").localplayer.idled:connect(function()
+        game:getservice("virtualuser"):button2down(vector2.new(0,0),workspace.currentcamera.cframe)
+        wait(1)
+        game:getservice("virtualuser"):button2up(vector2.new(0,0),workspace.currentcamera.cframe)
+    end)
+    
+    
+    
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Mapple7777/UI-Librarys/main/UI-1/UI.lua"))()
+local Window = Library:Create("Showcase","Fencing")
+Main = Library:Tab("General",6026568198)
+
+Main:Toggle("AutoFarm Level",_G.AutoFarm,function(value)
+        _G.AutoFarm = value
+        _G.Seet = value
+        _G.M = value
+        StopTween(_G.AutoFarm)
+    end)
+    spawn(function()
+        while wait() do
+            if _G.AutoFarm then
+                pcall(function()
+                    local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                    if not string.find(QuestTitle, NameMon) then
+                        StartMagnet = false
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    end
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                        StartMagnet = false
+                        CheckQuest()
+                        repeat wait() TP1(CFrameQuest) until (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoFarm
+                        if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then
+                            wait(0.1)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+                            wait(0.5)
+                        end
+                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                        CheckQuest()
+                        if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                    if v.Name == Mon then
+                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                            repeat task.wait()
+                                                EquipWeapon(_G.SelectWeapon)
+                                                AutoHaki()                                            
+                                                PosMon = v.HumanoidRootPart.CFrame
+                                                TP1(v.HumanoidRootPart.CFrame * CFrame.new(2,15,3))
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Humanoid.WalkSpeed = 0
+                                                v.Head.CanCollide = false
+                                                v.HumanoidRootPart.Size = Vector3.new(70,70,70)
+                                                StartMagnet = true
+                                                game:GetService'VirtualUser':CaptureController()
+                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                            until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                        else
+                                            StartMagnet = false
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                        end
+                                    end
+                                end
+                            end
+                        else
+                            StartMagnet = false
+                            if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                                TP1(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(15,10,2))
+                            else
+                                if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+                                    if PosMon ~= nil then
+                                        TP1(PosMon * CFrame.new(2,10,15))
+                                    else
+                                        if OldPos ~= nil then
+                                            TP1(OldPos.Position)
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end
+    end)
