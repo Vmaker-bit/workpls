@@ -2075,7 +2075,7 @@ spawn(function()
 end)
 
 
-page1:Button("Remove Sound Attack", function()
+Main:Button("Remove Sound Attack", function()
     pcall(function()
 		game:GetService("ReplicatedStorage").Assets.GUI:Destroy()
 		game:GetService("ReplicatedStorage").Assets.SlashHit:Destroy()
